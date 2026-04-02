@@ -1,0 +1,96 @@
+﻿@model WebBusinessPromilexApp.Models.Category
+
+@{
+    ViewData["Title"] = "Szczegóły Kategorii";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="mb-8 flex justify-between items-center">
+    <div>
+        <h2 class="text-4xl font-bold text-white tracking-tight">Karta kategorii</h2>
+        <p class="text-gray-500 mt-1">Podgląd danych i przypisanych produktów</p>
+    </div>
+    <div class="space-x-4">
+        <a asp-action="Index" class="text-sm font-bold text-gray-500 hover:text-white transition-colors">
+            Wróć do listy
+        </a>
+        <a asp-controller="Products" asp-action="Create" asp-route-categoryId="@Model.Id" class="px-6 py-3 bg-[#0D051A] border border-[#B300FF] text-white font-bold rounded-xl shadow-[0_0_15px_rgba(179,0,255,0.2)] hover:bg-[#B300FF] transition-all">
+            + Dodaj produkt do tej kategorii
+        </a>
+    </div>
+</div>
+
+<div class="max-w-4xl bg-[#1E1332]/50 border border-white/5 rounded-2xl p-8 shadow-2xl backdrop-blur-sm mb-8">
+    <div class="flex items-center gap-6 mb-8 border-b border-white/5 pb-6">
+        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+        {
+            <img src="@Model.ImageUrl" alt="@Model.Name" class="w-24 h-24 rounded-full object-cover border-2 border-[#FF00A0]" />
+        }
+        else
+        {
+            <div class="w-24 h-24 rounded-full border-2 border-[#FF00A0] flex items-center justify-center bg-[#0D051A] text-2xl font-bold text-[#FF00A0]">
+                @(string.IsNullOrEmpty(Model.Name) ? "X" : Model.Name.Substring(0, 1).ToUpper())
+            </div>
+        }
+        <div>
+            <h3 class="text-3xl font-bold text-[#B300FF]">@Model.Name</h3>
+            <a asp-action="Edit" asp-route-id="@Model?.Id" class="text-xs text-gray-400 hover:text-white underline mt-2 block">Edytuj dane kategorii</a>
+        </div>
+    </div>
+
+    <div class="mb-8">
+        <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-3">Opis</h4>
+        <div class="bg-[#0D051A] rounded-xl p-6 border border-white/5 text-gray-300 leading-relaxed">
+            @(string.IsNullOrWhiteSpace(Model.Description) ? "Brak opisu dla tej kategorii." : Model.Description)
+        </div>
+    </div>
+</div>
+
+<div class="bg-[#1E1332]/50 border border-white/5 rounded-2xl shadow-2xl backdrop-blur-sm overflow-hidden max-w-4xl">
+    <div class="p-6 border-b border-white/5 bg-[#0D051A]">
+        <h4 class="text-lg font-bold text-white">Produkty powiązane (@Model.Products.Count)</h4>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-[#0D051A]/80 border-b border-white/10 text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">
+                    <th class="p-5">Nazwa Produktu</th>
+                    <th class="p-5 text-right">Cena</th>
+                    <th class="p-5 text-center">Stan Magazynowy</th>
+                    <th class="p-5 text-right">Akcje</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5">
+                @if (Model.Products.Any())
+                {
+                    @foreach (var prod in Model.Products)
+                    {
+                        <tr class="hover:bg-white/[0.02] transition-colors group">
+                            <td class="p-5 text-white font-medium">@prod.Name</td>
+                            <td class="p-5 text-gray-400 text-sm text-right">@prod.Price.ToString("C")</td>
+                            <td class="p-5 text-center">
+                                @if (prod.IsAvailable && prod.Stock > 0)
+                                {
+                                    <span class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-bold rounded-full">@prod.Stock szt.</span>
+                                }
+                                else
+                                {
+                                    <span class="px-3 py-1 bg-red-500/10 text-red-400 text-[10px] font-bold rounded-full">Brak</span>
+                                }
+                            </td>
+                            <td class="p-5 text-right space-x-3">
+                                <a asp-controller="Products" asp-action="Edit" asp-route-id="@prod.Id" class="text-xs font-bold text-[#B300FF] hover:text-[#FF00A0] uppercase">Edytuj</a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="4" class="p-8 text-center text-gray-500 italic">Brak produktów w tej kategorii.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

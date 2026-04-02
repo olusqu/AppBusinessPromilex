@@ -1,0 +1,69 @@
+﻿@model IEnumerable<WebBusinessPromilexApp.Models.InventoryLog>
+
+@{
+    ViewData["Title"] = "Logi Magazynowe";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="mb-8 flex justify-between items-center">
+    <div>
+        <h2 class="text-4xl font-black text-white tracking-tighter uppercase italic">
+            LOGI <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#00F0FF] to-[#B300FF] drop-shadow-[0_0_10px_rgba(0,240,255,0.3)]">MAGAZYNOWE</span>
+        </h2>
+        <p class="text-gray-500 mt-1 text-[10px] uppercase tracking-[0.3em] font-bold">Pełna kontrola przepływu towaru</p>
+    </div>
+    <a asp-action="Create" class="px-8 py-4 bg-[#00F0FF]/10 border border-[#00F0FF]/30 text-[#00F0FF] font-bold rounded-2xl shadow-[0_0_20px_rgba(0,240,255,0.2)] hover:bg-[#00F0FF] hover:text-black transition-all transform hover:scale-105">
+        + ZAREJESTRUJ RUCH
+    </a>
+</div>
+
+<div class="bg-[#1E1332]/40 border border-white/5 rounded-3xl shadow-2xl backdrop-blur-xl overflow-hidden">
+    <table class="w-full text-left border-collapse">
+        <thead>
+            <tr class="bg-[#0D051A]/80 border-b border-white/10 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                <th class="p-6">Data</th>
+                <th class="p-6">Produkt</th>
+                <th class="p-6">Zmiana ilości</th>
+                <th class="p-6">Typ operacji</th>
+                <th class="p-6">Operator</th>
+                <th class="p-6 text-right">Akcje</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-white/5">
+            @foreach (var item in Model)
+            {
+                <tr class="hover:bg-white/[0.02] transition-all group">
+                    <td class="p-6 text-gray-500 text-xs font-mono">
+                        @item.LogDate.ToString("dd.MM.yyyy")<br />
+                        <span class="text-[#00F0FF]">@item.LogDate.ToString("HH:mm")</span>
+                    </td>
+                    <td class="p-6 text-white font-bold">
+                        @Html.DisplayFor(modelItem => item.Product.Name)
+                    </td>
+                    <td class="p-6 font-black text-lg">
+                        @if (item.QuantityChange > 0)
+                        {
+                            <span class="text-green-400">+@item.QuantityChange</span>
+                        }
+                        else
+                        {
+                            <span class="text-red-500">@item.QuantityChange</span>
+                        }
+                    </td>
+                    <td class="p-6">
+                        <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] font-bold text-gray-300 uppercase">
+                            @item.TransactionType
+                        </span>
+                    </td>
+                    <td class="p-6 text-gray-400 text-sm">
+                        <i class="ri-user-settings-line mr-1"></i> @Html.DisplayFor(modelItem => item.Employee.Username)
+                    </td>
+                    <td class="p-6 text-right space-x-3">
+                        <a asp-action="Details" asp-route-id="@item.Id" class="text-xs font-bold text-[#00F0FF] hover:underline uppercase">Szczegóły</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="text-xs font-bold text-red-500 hover:underline uppercase">Usuń</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

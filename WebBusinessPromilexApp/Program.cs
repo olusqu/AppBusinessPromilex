@@ -46,7 +46,8 @@ builder.Services.AddScoped<SupplierService>();
 builder.Services.AddScoped<InventoryService>();
 builder.Services.AddScoped<InventoryLogService>();
 builder.Services.AddScoped<AdminService>(); // Jeśli to nazwa klasy, a nie interfejsu
-
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<CartService>();
 // 5. Rejestracja Filtrów
 builder.Services.AddScoped<AdminOnlyAttribute>();
 

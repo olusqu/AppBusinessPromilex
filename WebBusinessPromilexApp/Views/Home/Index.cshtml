@@ -119,10 +119,13 @@
                                 }
                             </div>
                             
-                            <button class="w-full py-2.5 bg-gradient-to-r from-[#B300FF] to-[#FF00A0] text-white rounded-lg hover:shadow-[0_0_15px_rgba(179,0,255,0.6)] transition-all flex items-center justify-center gap-2 font-bold hover:scale-[1.02]">
-                                <i class="ri-shopping-cart-2-line text-lg"></i>
-                                Dodaj do koszyka
-                            </button>
+                            <form asp-controller="Cart" asp-action="Add" method="post" class="w-full m-0">
+                                <input type="hidden" name="productId" value="@prod.Id" />
+                                <button type="submit" class="w-full py-2.5 bg-gradient-to-r from-[#B300FF] to-[#FF00A0] text-white rounded-lg hover:shadow-[0_0_15px_rgba(179,0,255,0.6)] transition-all flex items-center justify-center gap-2 font-bold hover:scale-[1.02]">
+                                    <i class="ri-shopping-cart-2-line text-lg"></i>
+                                    Dodaj do koszyka
+                                </button>
+                            </form>
                         </div>
                     </div>
                 }

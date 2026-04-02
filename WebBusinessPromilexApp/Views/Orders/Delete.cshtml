@@ -1,0 +1,45 @@
+﻿@model WebBusinessPromilexApp.Models.Order
+
+@{
+    ViewData["Title"] = "Usuń Zamówienie";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="mb-8">
+    <h2 class="text-4xl font-bold text-red-500 tracking-tight">Usuń zamówienie</h2>
+    <p class="text-gray-500 mt-1">Ostrzeżenie: Usunięcie rekordu transakcji jest nieodwracalne.</p>
+</div>
+
+<div class="max-w-2xl bg-[#1E1332]/50 border border-red-500/20 rounded-2xl p-8 shadow-[0_0_30px_rgba(239,68,68,0.1)] backdrop-blur-sm">
+    
+    <div class="bg-[#0D051A] rounded-xl p-6 border border-white/5 mb-8">
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">ID Zamówienia</p>
+                <p class="text-white text-lg font-bold">#@Model.Id</p>
+            </div>
+            <div>
+                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Kwota</p>
+                <p class="text-[#FF00A0] text-lg font-bold">@Model.TotalAmount PLN</p>
+            </div>
+            <div>
+                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Status</p>
+                <p class="text-white">@Model.Status</p>
+            </div>
+            <div>
+                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Data</p>
+                <p class="text-gray-400">@Model.OrderDate</p>
+            </div>
+        </div>
+    </div>
+
+    <form asp-action="Delete" class="flex justify-end items-center space-x-6">
+        <input type="hidden" asp-for="Id" />
+        <a asp-action="Index" class="text-sm font-bold text-gray-500 hover:text-white transition-colors">
+            Anuluj
+        </a>
+        <button type="submit" class="px-8 py-4 bg-red-600 text-white font-bold rounded-xl shadow-[0_0_20px_rgba(220,38,38,0.4)] hover:shadow-[0_0_30px_rgba(220,38,38,0.6)] hover:bg-red-500 transition-all">
+            Usuń trwale
+        </button>
+    </form>
+</div>

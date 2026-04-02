@@ -1,0 +1,37 @@
+﻿@model WebBusinessPromilexApp.Models.Supplier
+
+@{
+    ViewData["Title"] = "Usuń Dostawcę";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="mb-8">
+    <h2 class="text-4xl font-bold text-red-500 tracking-tight">Usuń dostawcę</h2>
+    <p class="text-gray-500 mt-1">Czy na pewno chcesz usunąć ten kontakt z bazy?</p>
+</div>
+
+<div class="max-w-2xl bg-[#1E1332]/50 border border-red-500/20 rounded-2xl p-8 shadow-[0_0_30px_rgba(239,68,68,0.1)] backdrop-blur-sm">
+    
+    <div class="bg-[#0D051A] rounded-xl p-6 border border-white/5 mb-8">
+        <div class="grid grid-cols-1 gap-4">
+            <div>
+                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Nazwa Firmy</p>
+                <p class="text-white text-xl font-bold">@Model.CompanyName</p>
+            </div>
+            <div class="pt-4 border-t border-white/5">
+                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Kontakt</p>
+                <p class="text-gray-300">Osoba: @Model.ContactPerson <br /> Telefon: @Model.Phone</p>
+            </div>
+        </div>
+    </div>
+
+    <form asp-action="Delete" class="flex justify-end items-center space-x-6">
+        <input type="hidden" asp-for="Id" />
+        <a asp-action="Index" class="text-sm font-bold text-gray-500 hover:text-white transition-colors">
+            Anuluj
+        </a>
+        <button type="submit" class="px-8 py-4 bg-red-600 text-white font-bold rounded-xl shadow-[0_0_20px_rgba(220,38,38,0.4)] hover:shadow-[0_0_30px_rgba(220,38,38,0.6)] hover:bg-red-500 transition-all">
+            Usuń dostawcę
+        </button>
+    </form>
+</div>

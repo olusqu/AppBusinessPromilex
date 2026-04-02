@@ -1,0 +1,47 @@
+﻿@model WebBusinessPromilexApp.Models.InventoryLog
+
+@{
+    ViewData["Title"] = "Edytuj Log";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="mb-10">
+    <h2 class="text-4xl font-black text-white tracking-tighter uppercase italic">EDYTUJ <span class="text-[#00F0FF]">LOG</span></h2>
+</div>
+
+<div class="max-w-3xl bg-[#1E1332]/50 border border-white/5 rounded-3xl p-10 shadow-2xl backdrop-blur-md">
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-red-500 text-xs font-bold mb-6"></div>
+        <input type="hidden" asp-for="Id" />
+
+        <div class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label asp-for="QuantityChange" class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">Zmiana ilości</label>
+                    <input asp-for="QuantityChange" class="w-full bg-[#0D051A] border border-white/10 rounded-xl px-5 py-4 text-white font-bold text-xl focus:border-[#00F0FF] outline-none" />
+                </div>
+                <div>
+                    <label asp-for="TransactionType" class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">Typ transakcji</label>
+                    <input asp-for="TransactionType" class="w-full bg-[#0D051A] border border-white/10 rounded-xl px-5 py-4 text-white focus:border-[#00F0FF] outline-none" />
+                </div>
+            </div>
+
+            <div>
+                <label asp-for="LogDate" class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">Data</label>
+                <input asp-for="LogDate" class="w-full bg-[#0D051A] border border-white/10 rounded-xl px-5 py-4 text-white focus:border-[#00F0FF] outline-none" />
+            </div>
+
+            <div>
+                <label asp-for="Note" class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3">Notatka</label>
+                <textarea asp-for="Note" rows="3" class="w-full bg-[#0D051A] border border-white/10 rounded-xl px-5 py-4 text-white focus:border-[#00F0FF] outline-none"></textarea>
+            </div>
+
+            <div class="flex justify-end items-center space-x-6 pt-8 border-t border-white/5">
+                <a asp-action="Index" class="text-xs font-bold text-gray-500 hover:text-white uppercase tracking-widest transition-colors">Anuluj</a>
+                <button type="submit" class="px-12 py-4 bg-gradient-to-r from-[#00F0FF] to-[#B300FF] text-black font-black rounded-xl shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all">
+                    ZAPISZ
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

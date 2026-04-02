@@ -1,0 +1,69 @@
+﻿@model IEnumerable<WebBusinessPromilexApp.Models.Message>
+
+@{
+    ViewData["Title"] = "Skrzynka Odbiorcza";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Upewnij się, że ten layout ma Tailwind CSS!
+}
+
+<div class="py-12 max-w-7xl mx-auto px-4">
+    <div class="mb-12">
+        <h2 class="text-5xl font-black text-white tracking-tighter uppercase italic">
+            SKRZYNKA <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#B300FF] to-[#FF00A0] drop-shadow-[0_0_15px_rgba(255,0,160,0.5)]">ODBIORCZA</span>
+        </h2>
+        <p class="text-gray-500 mt-2 font-bold uppercase tracking-[0.3em] text-xs">
+            Status systemu: <span class="text-[#FF00A0]">@Model.Count(m => !m.IsRead) NOWYCH POWIADOMIEŃ</span>
+        </p>
+    </div>
+
+    <div class="bg-[#1E1332]/50 border border-white/5 rounded-3xl shadow-2xl backdrop-blur-xl overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-[#0D051A]/80 border-b border-white/10 text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">
+                        <th class="p-6 w-20 text-center">Status</th>
+                        <th class="p-6">Data odebrania</th>
+                        <th class="p-6">Nadawca</th>
+                        <th class="p-6">Podgląd treści</th>
+                        <th class="p-6 text-right">Zarządzanie</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-white/5">
+                    @foreach (var item in Model)
+                    {
+                        <tr class="@(item.IsRead ? "opacity-40" : "bg-[#B300FF]/5") hover:bg-white/[0.03] transition-all duration-300 group">
+                            <td class="p-6 text-center">
+                                @if (!item.IsRead)
+                                {
+                                    <div class="w-3 h-3 rounded-full bg-[#FF00A0] mx-auto shadow-[0_0_15px_#FF00A0] animate-pulse"></div>
+                                }
+                                else
+                                {
+                                    <div class="w-2 h-2 rounded-full bg-gray-700 mx-auto"></div>
+                                }
+                            </td>
+                            <td class="p-6 text-gray-500 text-xs font-mono">
+                                @item.SentDate.ToString("dd.MM.yyyy")<br />
+                                <span class="text-[#B300FF]">@item.SentDate.ToString("HH:mm")</span>
+                            </td>
+                            <td class="p-6">
+                                <div class="@(!item.IsRead ? "text-white font-bold" : "text-gray-400") tracking-wide">@item.SenderName</div>
+                                <div class="text-[10px] text-[#FF00A0] opacity-70">@item.Email</div>
+                            </td>
+                            <td class="p-6 text-gray-500 text-sm italic truncate max-w-[300px]">
+                                "@item.Content"
+                            </td>
+                            <td class="p-6 text-right space-x-2">
+                                <a asp-action="Details" asp-route-id="@item.Id" class="inline-flex items-center px-5 py-2 bg-gradient-to-r from-[#B300FF] to-[#FF00A0] text-white rounded-full text-[10px] font-bold uppercase tracking-widest hover:shadow-[0_0_20px_rgba(179,0,255,0.5)] transition-all">
+                                    CZYTAJ
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="inline-flex items-center px-5 py-2 border border-red-500/20 text-red-500 rounded-full text-[10px] font-bold uppercase hover:bg-red-500 hover:text-white transition-all">
+                                    USUŃ
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+﻿@model WebBusinessPromilexApp.Models.Promotion
+
+@{
+    ViewData["Title"] = "Nowa Promocja";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="mb-8">
+    <h2 class="text-4xl font-bold text-white tracking-tight uppercase italic">Nowa <span class="text-[#FF00A0]">Kampania</span></h2>
+    <p class="text-gray-500 mt-1 uppercase text-xs tracking-widest">Ustal parametry zniżki</p>
+</div>
+
+<div class="max-w-3xl bg-[#1E1332]/50 border border-white/5 rounded-3xl p-10 shadow-2xl backdrop-blur-md">
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-red-500 text-xs font-bold mb-6"></div>
+
+        <div class="space-y-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <label asp-for="Name" class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3">Nazwa promocji</label>
+                    <input asp-for="Name" class="w-full bg-[#0D051A] border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-[#FF00A0] transition-all" placeholder="np. Weekend z Whisky" />
+                </div>
+                
+                <div>
+                    <label asp-for="DiscountPercentage" class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3">Wartość rabatu (%)</label>
+                    <input asp-for="DiscountPercentage" type="number" step="1" class="w-full bg-[#0D051A] border border-white/10 rounded-xl px-5 py-4 text-[#FF00A0] font-bold text-xl focus:outline-none focus:border-[#FF00A0] transition-all" value="10" />
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6 border-t border-white/5">
+                <div>
+                    <label asp-for="StartDate" class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3">Data startu</label>
+                    <input asp-for="StartDate" type="datetime-local" class="w-full bg-[#0D051A] border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-[#B300FF]" />
+                </div>
+                
+                <div>
+                    <label asp-for="EndDate" class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3">Data zakończenia</label>
+                    <input asp-for="EndDate" type="datetime-local" class="w-full bg-[#0D051A] border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-[#B300FF]" />
+                </div>
+            </div>
+
+            <div class="flex justify-end items-center space-x-6 pt-10 border-t border-white/5">
+                <a asp-action="Index" class="text-xs font-bold text-gray-500 hover:text-white uppercase tracking-widest transition-colors">Wróć</a>
+                <button type="submit" class="px-12 py-4 bg-gradient-to-r from-[#B300FF] to-[#FF00A0] text-white font-bold rounded-xl shadow-[0_0_20px_rgba(179,0,255,0.3)] hover:shadow-[0_0_35px_rgba(179,0,255,0.5)] transition-all">
+                    URUCHOM PROMOCJĘ
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,42 @@
+﻿@model WebBusinessPromilexApp.Models.Category
+
+@{
+    ViewData["Title"] = "Szczegóły Kategorii";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="mb-8 flex justify-between items-center">
+    <div>
+        <h2 class="text-4xl font-bold text-white tracking-tight">Karta kategorii</h2>
+        <p class="text-gray-500 mt-1">Podgląd danych kategorii</p>
+    </div>
+    <a asp-action="Index" class="text-sm font-bold text-gray-500 hover:text-white transition-colors">
+        Wróć do listy
+    </a>
+</div>
+
+<div class="max-w-4xl bg-[#1E1332]/50 border border-white/5 rounded-2xl p-8 shadow-2xl backdrop-blur-sm mb-8">
+    <div class="flex items-center gap-6 mb-8 border-b border-white/5 pb-6">
+        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+        {
+            <img src="@Model.ImageUrl" alt="@Model.Name" class="w-24 h-24 rounded-full object-cover border-2 border-[#FF00A0]" />
+        }
+        else
+        {
+            <div class="w-24 h-24 rounded-full border-2 border-[#FF00A0] flex items-center justify-center bg-[#0D051A] text-2xl font-bold text-[#FF00A0]">
+                @(string.IsNullOrEmpty(Model.Name) ? "X" : Model.Name.Substring(0, 1).ToUpper())
+            </div>
+        }
+        <div>
+            <h3 class="text-3xl font-bold text-[#B300FF]">@Model.Name</h3>
+            <a asp-action="Edit" asp-route-id="@Model?.Id" class="text-xs text-gray-400 hover:text-white underline mt-2 block">Edytuj dane kategorii</a>
+        </div>
+    </div>
+
+    <div class="mb-8">
+        <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-3">Opis</h4>
+        <div class="bg-[#0D051A] rounded-xl p-6 border border-white/5 text-gray-300 leading-relaxed">
+            @(string.IsNullOrWhiteSpace(Model.Description) ? "Brak opisu dla tej kategorii." : Model.Description)
+        </div>
+    </div>
+</div>

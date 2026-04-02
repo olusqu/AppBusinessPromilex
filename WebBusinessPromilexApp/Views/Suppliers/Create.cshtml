@@ -1,0 +1,48 @@
+﻿@model WebBusinessPromilexApp.Models.Supplier
+
+@{
+    ViewData["Title"] = "Nowy Dostawca";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="mb-8">
+    <h2 class="text-4xl font-bold text-white tracking-tight">Nowy dostawca</h2>
+    <p class="text-gray-500 mt-1">Dodaj nowy kontakt biznesowy do systemu</p>
+</div>
+
+<div class="max-w-3xl bg-[#1E1332]/50 border border-white/5 rounded-2xl p-8 shadow-2xl backdrop-blur-sm">
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-red-500 text-xs font-semibold bg-red-500/10 p-3 rounded-lg border border-red-500/20 mb-6"></div>
+
+        <div class="space-y-6">
+            <div>
+                <label asp-for="CompanyName" class="block text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-3">Nazwa Firmy</label>
+                <input asp-for="CompanyName" class="w-full bg-[#0D051A] border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-[#FF00A0] transition-all" placeholder="np. Dystrybutor Premium" />
+                <span asp-validation-for="CompanyName" class="text-red-500 text-[10px] mt-2 block font-medium"></span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-white/5">
+                <div>
+                    <label asp-for="ContactPerson" class="block text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-3">Osoba Kontaktowa</label>
+                    <input asp-for="ContactPerson" class="w-full bg-[#0D051A] border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-[#FF00A0] transition-all" />
+                </div>
+                <div>
+                    <label asp-for="Phone" class="block text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-3">Telefon</label>
+                    <input asp-for="Phone" class="w-full bg-[#0D051A] border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-[#FF00A0] transition-all" />
+                </div>
+            </div>
+
+            <div class="flex justify-end pt-8 border-t border-white/5">
+                <button type="submit" class="px-10 py-4 bg-gradient-to-r from-[#B300FF] to-[#FF00A0] text-white font-bold rounded-xl shadow-[0_0_20px_rgba(179,0,255,0.4)] hover:shadow-[0_0_30px_rgba(179,0,255,0.6)] transition-all">
+                    Zapisz Dostawcę
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

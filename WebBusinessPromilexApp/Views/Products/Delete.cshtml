@@ -1,0 +1,43 @@
+﻿@model WebBusinessPromilexApp.Models.Product
+
+@{
+    ViewData["Title"] = "Usuń Produkt";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="mb-8">
+    <h2 class="text-4xl font-bold text-red-500 tracking-tight">Usuń produkt</h2>
+    <p class="text-gray-500 mt-1">Czy na pewno chcesz bezpowrotnie usunąć ten asortyment?</p>
+</div>
+
+<div class="max-w-3xl bg-[#1E1332]/50 border border-red-500/20 rounded-2xl p-8 shadow-[0_0_30px_rgba(239,68,68,0.1)] backdrop-blur-sm">
+    <h4 class="text-xl font-bold text-white mb-6 border-b border-white/5 pb-4">Szczegóły: @Model.Name</h4>
+
+    <dl class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 mb-8">
+        <dt class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Cena</dt>
+        <dd class="text-[#FF00A0] font-bold">@Html.DisplayFor(model => model.Price) PLN</dd>
+
+        <dt class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Ilość w magazynie</dt>
+        <dd class="text-white">@Html.DisplayFor(model => model.Stock) szt.</dd>
+
+        <dt class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Status</dt>
+        <dd class="text-white">
+            @(Model.IsAvailable ? "Widoczny w sklepie" : "Ukryty")
+        </dd>
+    </dl>
+
+    <div class="flex items-center space-x-4 p-4 bg-red-500/10 rounded-xl border border-red-500/20 mb-8">
+        <svg class="w-6 h-6 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+        <p class="text-sm font-semibold text-red-400">Tej operacji nie można cofnąć.</p>
+    </div>
+
+    <form asp-action="Delete" class="flex justify-end items-center space-x-6 pt-6 border-t border-white/5">
+        <input type="hidden" asp-for="Id" />
+        <a asp-action="Index" class="text-sm font-bold text-gray-500 hover:text-white transition-colors">
+            Anuluj
+        </a>
+        <button type="submit" class="px-10 py-4 bg-red-600 text-white font-bold rounded-xl shadow-[0_0_20px_rgba(220,38,38,0.4)] hover:shadow-[0_0_30px_rgba(220,38,38,0.6)] hover:bg-red-500 transition-all transform hover:-translate-y-0.5">
+            Usuń trwale
+        </button>
+    </form>
+</div>

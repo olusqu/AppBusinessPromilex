@@ -1,0 +1,61 @@
+﻿@model IEnumerable<WebBusinessPromilexApp.Models.Employee>
+
+@{
+    ViewData["Title"] = "Pracownicy";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="mb-8 flex justify-between items-center">
+    <div>
+        <h2 class="text-4xl font-bold text-white tracking-tighter uppercase italic">
+            ZESPÓŁ <span class="text-[#FF00A0] drop-shadow-[0_0_10px_#FF00A0]">PROMILEX</span>
+        </h2>
+        <p class="text-gray-500 mt-1 text-[10px] uppercase tracking-[0.3em]">Zarządzanie uprawnieniami i dostępem do panelu</p>
+    </div>
+    <a asp-action="Create" class="px-8 py-4 bg-gradient-to-r from-[#B300FF] to-[#FF00A0] text-white font-bold rounded-2xl shadow-[0_0_25px_rgba(179,0,255,0.4)] hover:shadow-[0_0_40px_rgba(179,0,255,0.6)] transition-all hover:scale-105 transform">
+        + DODAJ PRACOWNIKA
+    </a>
+</div>
+
+<div class="bg-[#1E1332]/40 border border-white/5 rounded-3xl shadow-2xl backdrop-blur-xl overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-[#0D051A]/80 border-b border-white/10 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                    <th class="p-6">Pracownik</th>
+                    <th class="p-6">Rola Systemowa</th>
+                    <th class="p-6">Identyfikator (Login)</th>
+                    <th class="p-6 text-right">Zarządzaj</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5">
+                @foreach (var item in Model)
+                {
+                    <tr class="hover:bg-white/[0.03] transition-all duration-300 group">
+                        <td class="p-6">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#B300FF] to-[#FF00A0] flex items-center justify-center text-white font-bold shadow-lg">
+                                    @(item.FirstName?.FirstOrDefault())@(item.LastName?.FirstOrDefault())
+                                </div>
+                                <span class="text-white font-bold tracking-wide">@item.FirstName @item.LastName</span>
+                            </div>
+                        </td>
+                        <td class="p-6">
+                            <span class="px-3 py-1 bg-[#B300FF]/10 text-[#B300FF] border border-[#B300FF]/20 rounded-full text-[10px] font-bold uppercase tracking-tighter">
+                                @item.Role
+                            </span>
+                        </td>
+                        <td class="p-6 text-gray-500 font-mono text-sm italic">@@@item.Username</td>
+                        <td class="p-6 text-right space-x-3">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="text-xs font-bold text-[#B300FF] hover:text-[#FF00A0] transition-colors uppercase">Edytuj</a>
+                            <span class="text-white/10">|</span>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="text-xs font-bold text-gray-400 hover:text-white transition-colors uppercase">Karta</a>
+                            <span class="text-white/10">|</span>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="text-xs font-bold text-red-500 hover:text-red-400 transition-colors uppercase">Usuń</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

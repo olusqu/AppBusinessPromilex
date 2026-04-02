@@ -1,0 +1,53 @@
+﻿@model WebBusinessPromilexApp.Models.Customer
+
+@{
+    ViewData["Title"] = "Edytuj Klienta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="mb-8">
+    <h2 class="text-4xl font-bold text-white tracking-tight">Edytuj profil</h2>
+    <p class="text-gray-500 mt-1">Zaktualizuj dane kontaktowe klienta</p>
+</div>
+
+<div class="max-w-3xl bg-[#1E1332]/50 border border-white/5 rounded-2xl p-8 shadow-2xl backdrop-blur-sm">
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-red-500 text-xs font-semibold bg-red-500/10 p-3 rounded-lg border border-red-500/20 mb-6"></div>
+        <input type="hidden" asp-for="Id" />
+
+        <div class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label asp-for="FirstName" class="block text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-3">Imię</label>
+                    <input asp-for="FirstName" class="w-full bg-[#0D051A] border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-[#FF00A0] transition-all" />
+                    <span asp-validation-for="FirstName" class="text-red-500 text-[10px] mt-2 block font-medium"></span>
+                </div>
+                <div>
+                    <label asp-for="LastName" class="block text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-3">Nazwisko</label>
+                    <input asp-for="LastName" class="w-full bg-[#0D051A] border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-[#FF00A0] transition-all" />
+                    <span asp-validation-for="LastName" class="text-red-500 text-[10px] mt-2 block font-medium"></span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-white/5">
+                <div>
+                    <label asp-for="Email" class="block text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-3">Adres Email</label>
+                    <input asp-for="Email" type="email" class="w-full bg-[#0D051A] border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-[#FF00A0] transition-all" />
+                    <span asp-validation-for="Email" class="text-red-500 text-[10px] mt-2 block font-medium"></span>
+                </div>
+                <div>
+                    <label asp-for="Phone" class="block text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-3">Telefon</label>
+                    <input asp-for="Phone" class="w-full bg-[#0D051A] border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-[#FF00A0] transition-all" />
+                    <span asp-validation-for="Phone" class="text-red-500 text-[10px] mt-2 block font-medium"></span>
+                </div>
+            </div>
+
+            <div class="flex justify-end items-center space-x-6 pt-8 border-t border-white/5">
+                <a asp-action="Index" class="text-sm font-bold text-gray-500 hover:text-white transition-colors">Anuluj</a>
+                <button type="submit" class="px-10 py-4 bg-gradient-to-r from-[#B300FF] to-[#FF00A0] text-white font-bold rounded-xl shadow-[0_0_20px_rgba(179,0,255,0.4)] hover:shadow-[0_0_30px_rgba(179,0,255,0.6)] transition-all transform hover:-translate-y-0.5">
+                    Zapisz Zmiany
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

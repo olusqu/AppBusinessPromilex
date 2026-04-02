@@ -1,0 +1,54 @@
+﻿@model IEnumerable<WebBusinessPromilexApp.Models.InventoryLog>
+
+@{
+    ViewData["Title"] = "Logi Magazynowe";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="mb-8 flex justify-between items-center">
+    <div>
+        <h2 class="text-4xl font-black text-white tracking-tighter uppercase italic">LOGI <span class="text-[#00F0FF]">MAGAZYNOWE</span></h2>
+        <p class="text-gray-500 mt-1 uppercase text-xs tracking-widest">Historia ruchów magazynowych</p>
+    </div>
+    <a asp-action="Create" class="px-8 py-3 bg-gradient-to-r from-[#00F0FF] to-[#B300FF] text-black font-black rounded-xl shadow-[0_0_20px_rgba(0,240,255,0.3)] hover:shadow-[0_0_40px_rgba(0,240,255,0.5)] transition-all uppercase text-xs tracking-widest">
+        + Nowy Log
+    </a>
+</div>
+
+<div class="bg-[#1E1332]/50 border border-white/5 rounded-3xl shadow-2xl backdrop-blur-xl overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-[#0D051A]/80 border-b border-white/10 text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">
+                    <th class="p-5">Data</th>
+                    <th class="p-5">Typ</th>
+                    <th class="p-5 text-center">Zmiana</th>
+                    <th class="p-5">Notatka</th>
+                    <th class="p-5 text-right">Akcje</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5">
+                @foreach (var item in Model)
+                {
+                    <tr class="hover:bg-white/[0.03] transition-all duration-300">
+                        <td class="p-5 text-gray-500 text-xs font-mono">@item.LogDate.ToString("dd.MM.yyyy HH:mm")</td>
+                        <td class="p-5 text-white font-bold uppercase text-xs tracking-widest">@item.TransactionType</td>
+                        <td class="p-5 text-center">
+                            <span class="font-black text-lg @(item.QuantityChange > 0 ? "text-green-400" : "text-red-500")">
+                                @(item.QuantityChange > 0 ? "+" : "")@item.QuantityChange
+                            </span>
+                        </td>
+                        <td class="p-5 text-gray-500 text-sm italic truncate max-w-[200px]">@item.Note</td>
+                        <td class="p-5 text-right space-x-2">
+                            <a asp-action="Details" asp-route-id="@item.Id" class="text-xs font-bold text-[#00F0FF] hover:text-white uppercase tracking-wider">Szczegóły</a>
+                            <span class="text-white/20">|</span>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="text-xs font-bold text-[#B300FF] hover:text-[#FF00A0] uppercase tracking-wider">Edytuj</a>
+                            <span class="text-white/20">|</span>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="text-xs font-bold text-red-500 hover:text-red-400 uppercase tracking-wider">Usuń</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

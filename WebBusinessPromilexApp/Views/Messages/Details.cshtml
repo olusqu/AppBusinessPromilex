@@ -1,0 +1,59 @@
+﻿@model WebBusinessPromilexApp.Models.Message
+
+@{
+    ViewData["Title"] = "Szczegóły Wiadomości";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="py-12 max-w-5xl mx-auto px-4">
+    <div class="mb-10">
+        <a asp-action="Index" class="text-gray-500 text-[10px] font-bold uppercase tracking-[0.3em] hover:text-[#FF00A0] transition-colors flex items-center gap-2 mb-6">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            POWRÓT DO INBOXA
+        </a>
+        <h2 class="text-4xl font-black text-white tracking-tighter uppercase italic">
+            RAPORT: <span class="text-[#B300FF] drop-shadow-[0_0_10px_#B300FF]">KOMUNIKAT</span>
+        </h2>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="space-y-6">
+            <div class="bg-[#1E1332]/50 border border-white/5 rounded-3xl p-8 backdrop-blur-sm shadow-xl">
+                <h3 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-6 border-b border-white/5 pb-2">Nadawca</h3>
+                <div class="space-y-4">
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase">Imię i nazwisko</p>
+                        <p class="text-white font-bold text-lg">@Model.SenderName</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase">Adres Email</p>
+                        <p class="text-[#FF00A0] font-medium">@Model.Email</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase">Telefon</p>
+                        <p class="text-white font-mono">@(Model.Phone ?? "NIE PODANO")</p>
+                    </div>
+                </div>
+            </div>
+            
+            <a asp-action="Delete" asp-route-id="@Model.Id" class="block w-full text-center py-4 border border-red-500/20 text-red-500 rounded-2xl hover:bg-red-500 hover:text-white transition-all font-bold text-xs uppercase tracking-widest shadow-lg">
+                USUŃ WIADOMOŚĆ
+            </a>
+        </div>
+
+        <div class="lg:col-span-2">
+            <div class="bg-[#0D051A]/80 border border-[#B300FF]/20 rounded-3xl p-10 shadow-[0_0_30px_rgba(179,0,255,0.05)] relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-8 opacity-5">
+                    <svg class="w-32 h-32 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V12C14.017 12.5523 13.5693 13 13.017 13H11.017V4H21.017V15C21.017 17.2091 19.2261 19 17.017 19H14.017V21H14.017ZM3.0166 21L3.0166 18C3.0166 16.8954 3.91203 16 5.0166 16H8.0166C8.56888 16 9.0166 15.5523 9.0166 15V9C9.0166 8.44772 8.56888 8 8.0166 8H4.0166C3.46432 8 3.0166 8.44772 3.0166 9V12C3.0166 12.5523 2.56888 13 2.0166 13H0.0166016V4H10.0166V15C10.0166 17.2091 8.22573 19 6.0166 19H3.0166V21H3.0166Z" /></svg>
+                </div>
+                <div class="flex justify-between items-center mb-8 border-b border-white/5 pb-6">
+                    <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-[0.4em]">Treść zapytania</h4>
+                    <span class="text-gray-600 text-xs font-mono">@Model.SentDate.ToString("F")</span>
+                </div>
+                <div class="text-gray-200 leading-relaxed text-xl italic font-light whitespace-pre-wrap relative z-10">
+                    "@Model.Content"
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

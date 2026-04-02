@@ -1,0 +1,79 @@
+﻿@model WebBusinessPromilexApp.Models.LoginViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zaloguj się - PROMILEX</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+        background: linear-gradient(135deg, #1A0B2E 0%, #0D051A 100%);
+        color: white;
+        min-height: 100vh;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen antialiased font-sans">
+
+    <div class="w-full max-w-md">
+
+        <!-- Logo -->
+        <div class="text-center mb-10">
+            <div class="flex items-center justify-center space-x-2 mb-4">
+                <div class="w-10 h-10 bg-gradient-to-br from-[#B300FF] to-[#FF00A0] rounded-lg flex items-center justify-center text-white shadow-[0_0_15px_rgba(255,0,160,0.5)] rotate-45">
+                    <svg class="w-6 h-6 -rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                </div>
+            </div>
+            <h1 class="text-3xl font-bold text-white tracking-tighter uppercase">PROMILEX<span class="text-[#FF00A0]">.</span></h1>
+            <p class="text-gray-500 text-sm mt-1">Panel Administracyjny</p>
+        </div>
+
+        <!-- Karta Logowania -->
+        <div class="bg-[#1E1332]/80 border border-white/5 rounded-2xl p-8 shadow-2xl backdrop-blur-sm">
+            <h2 class="text-2xl font-bold text-white mb-6">Zaloguj się</h2>
+
+            @using (Html.BeginForm("Login", "Admin", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken() @* KLUCZOWE - Zapobiega odrzuceniu POST przez ASP.NET *@
+
+                <div class="space-y-6">
+
+                    <!-- Wizualny debug błędów z serwera -->
+                    @Html.ValidationSummary(true, "", new { @class = "text-red-400 text-sm bg-red-500/10 p-3 rounded-lg border border-red-500/20 mb-4" })
+
+                    <div>
+                        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-3">Nazwa użytkownika</label>
+                        @Html.TextBoxFor(m => m.Username, new { @class = "w-full bg-[#0D051A] border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-[#FF00A0] focus:ring-1 focus:ring-[#FF00A0]/30 transition-all", placeholder = "np. admin" })
+                        @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-red-400 text-xs mt-2 block font-medium" })
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-3">Hasło</label>
+                        @Html.PasswordFor(m => m.Password, new { @class = "w-full bg-[#0D051A] border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-[#FF00A0] focus:ring-1 focus:ring-[#FF00A0]/30 transition-all", placeholder = "••••••••" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-red-400 text-xs mt-2 block font-medium" })
+                    </div>
+
+                    <div class="pt-4">
+                        <button type="submit" class="w-full py-4 bg-gradient-to-r from-[#B300FF] to-[#FF00A0] text-white font-bold rounded-xl shadow-[0_0_20px_rgba(179,0,255,0.4)] hover:shadow-[0_0_30px_rgba(179,0,255,0.6)] transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
+                            Zaloguj się
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Stopka -->
+        <p class="text-center text-gray-600 text-[10px] tracking-[0.2em] uppercase mt-8">
+            &copy; 2026 PROMILEX. System zarządzania.
+        </p>
+
+    </div>
+
+</body>
+</html>

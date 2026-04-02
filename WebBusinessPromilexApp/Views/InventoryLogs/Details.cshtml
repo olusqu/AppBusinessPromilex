@@ -1,0 +1,46 @@
+﻿@model WebBusinessPromilexApp.Models.InventoryLog
+
+@{
+    ViewData["Title"] = "Szczegóły Logu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="mb-10">
+    <a asp-action="Index" class="text-gray-500 text-[10px] font-bold uppercase tracking-[0.3em] hover:text-[#00F0FF] transition-colors flex items-center gap-2 mb-6">
+        <i class="ri-arrow-left-line"></i> POWRÓT DO LISTY
+    </a>
+    <h2 class="text-4xl font-black text-white tracking-tighter uppercase italic">KARTA <span class="text-[#00F0FF]">RUCHU</span></h2>
+</div>
+
+<div class="max-w-4xl bg-[#1E1332]/50 border border-white/5 rounded-3xl p-10 shadow-2xl backdrop-blur-md">
+    <div class="flex items-center justify-between mb-12 border-b border-white/5 pb-8">
+        <div>
+            <h3 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1">Typ</h3>
+            <p class="text-3xl font-bold text-white">@Model.TransactionType</p>
+        </div>
+        <div class="text-right">
+            <h3 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1">Zmiana</h3>
+            <p class="text-4xl font-black @(Model.QuantityChange > 0 ? "text-green-400" : "text-red-500")">
+                @(Model.QuantityChange > 0 ? "+" : "")@Model.QuantityChange
+            </p>
+        </div>
+    </div>
+
+    <dl class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+        <div class="bg-[#0D051A] p-6 rounded-2xl border border-white/5">
+            <dt class="text-[10px] font-bold text-gray-500 uppercase mb-2">Typ operacji</dt>
+            <dd class="text-white font-bold uppercase tracking-widest text-sm">@Model.TransactionType</dd>
+        </div>
+        <div class="bg-[#0D051A] p-6 rounded-2xl border border-white/5">
+            <dt class="text-[10px] font-bold text-gray-500 uppercase mb-2">Data systemowa</dt>
+            <dd class="text-[#00F0FF] font-mono text-sm">@Model.LogDate.ToString("F")</dd>
+        </div>
+    </dl>
+
+    <div class="bg-[#0D051A] p-8 rounded-2xl border border-white/5">
+        <dt class="text-[10px] font-bold text-gray-500 uppercase mb-4">Notatka systemowa</dt>
+        <dd class="text-gray-300 italic text-lg leading-relaxed">
+            "@(string.IsNullOrEmpty(Model.Note) ? "Brak dodatkowego opisu" : Model.Note)"
+        </dd>
+    </div>
+</div>

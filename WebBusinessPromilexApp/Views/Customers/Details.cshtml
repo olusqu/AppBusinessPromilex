@@ -1,0 +1,45 @@
+﻿@model WebBusinessPromilexApp.Models.Customer
+
+@{
+    ViewData["Title"] = "Szczegóły Klienta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="mb-8 flex justify-between items-center">
+    <div>
+        <h2 class="text-4xl font-bold text-white tracking-tight">Karta klienta</h2>
+        <p class="text-gray-500 mt-1">Podgląd danych kontaktowych</p>
+    </div>
+    <a asp-action="Index" class="text-sm font-bold text-gray-500 hover:text-white transition-colors flex items-center">
+        Wróć do listy
+    </a>
+</div>
+
+<div class="max-w-3xl bg-[#1E1332]/50 border border-white/5 rounded-2xl p-8 shadow-2xl backdrop-blur-sm">
+    <div class="flex items-center space-x-6 mb-8 border-b border-white/5 pb-6">
+        <div class="w-16 h-16 rounded-2xl bg-[#0D051A] border border-white/10 flex items-center justify-center text-[#B300FF] font-bold text-2xl shadow-lg">
+            @(Model.FirstName?.FirstOrDefault())@(Model.LastName?.FirstOrDefault())
+        </div>
+        <div>
+            <h3 class="text-2xl font-bold text-white">@Model.FirstName @Model.LastName</h3>
+            <p class="text-gray-400 mt-1">ID Klienta: #@Model.Id</p>
+        </div>
+    </div>
+
+    <dl class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6">
+        <div>
+            <dt class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-1">Adres Email</dt>
+            <dd class="text-white bg-[#0D051A] px-4 py-3 rounded-xl border border-white/5 inline-block">@Model.Email</dd>
+        </div>
+        <div>
+            <dt class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-1">Telefon</dt>
+            <dd class="text-white font-mono bg-[#0D051A] px-4 py-3 rounded-xl border border-white/5 inline-block">@Model.Phone</dd>
+        </div>
+    </dl>
+
+    <div class="flex justify-end items-center space-x-4 pt-8 mt-8 border-t border-white/5">
+        <a asp-action="Edit" asp-route-id="@Model?.Id" class="px-8 py-3 bg-gradient-to-r from-[#B300FF] to-[#FF00A0] hover:shadow-[0_0_20px_rgba(179,0,255,0.4)] text-white font-bold rounded-xl transition-all">
+            Edytuj dane
+        </a>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+﻿@model IEnumerable<WebBusinessPromilexApp.Models.Category>
+
+@{
+    ViewData["Title"] = "Kategorie";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="mb-8 flex justify-between items-center">
+    <div>
+        <h2 class="text-4xl font-bold text-white tracking-tight">Kategorie</h2>
+        <p class="text-gray-500 mt-1">Grupowanie asortymentu w sklepie</p>
+    </div>
+    <a asp-action="Create" class="px-6 py-3 bg-gradient-to-r from-[#B300FF] to-[#FF00A0] text-white font-bold rounded-xl shadow-[0_0_20px_rgba(179,0,255,0.4)] hover:shadow-[0_0_30px_rgba(179,0,255,0.6)] transition-all transform hover:-translate-y-0.5">
+        + Dodaj kategorię
+    </a>
+</div>
+
+<div class="bg-[#1E1332]/50 border border-white/5 rounded-2xl shadow-2xl backdrop-blur-sm overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-[#0D051A]/80 border-b border-white/10 text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">
+                    <th class="p-5">Nazwa Kategorii</th>
+                    <th class="p-5">Opis</th>
+                    <th class="p-5 text-right">Akcje</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5">
+                @foreach (var item in Model)
+                {
+                    <tr class="hover:bg-white/[0.02] transition-colors group">
+                        <td class="p-5 text-white font-medium">@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td class="p-5 text-gray-400 text-sm">@Html.DisplayFor(modelItem => item.Description)</td>
+                        <td class="p-5 text-right space-x-3">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="text-xs font-bold text-[#B300FF] hover:text-[#FF00A0] transition-colors uppercase tracking-wider">Edytuj</a>
+                            <span class="text-white/20">|</span>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="text-xs font-bold text-gray-400 hover:text-white transition-colors uppercase tracking-wider">Szczegóły</a>
+                            <span class="text-white/20">|</span>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="text-xs font-bold text-red-500 hover:text-red-400 transition-colors uppercase tracking-wider">Usuń</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

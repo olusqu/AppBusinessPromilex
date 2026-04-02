@@ -52,6 +52,43 @@ builder.Services.AddScoped<AdminOnlyAttribute>();
 
 var app = builder.Build();
 
+// Inicjalizacja bazy danych i tworzenie konta admina, jeśli nie istnieje
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<ApplicationDbContext>();
+
+    context.Database.EnsureCreated();
+
+    var adminUser = context.Employees.FirstOrDefault(e => e.Username == "admin");
+    var hasher = new Microsoft.AspNetCore.Identity.PasswordHasher<Employee>();
+
+    if (adminUser == null)
+    {
+        // 1. Admina w ogóle nie ma - tworzymy nowego
+        adminUser = new Employee
+        {
+            Username = "admin",
+            FirstName = "Główny",
+            LastName = "Administrator",
+            Role = "Admin",
+            PasswordHash = hasher.HashPassword(null!, "Admin123!")
+        };
+        context.Employees.Add(adminUser);
+        context.SaveChanges();
+    }
+    else
+    {
+        // 2. Admin istnieje, sprawdzamy czy jego hasło jest zepsute (nie jest hashem)
+        // Hashe z PasswordHasher zawsze zaczynają się od "AQAAAA" (wersja V3)
+        if (adminUser.PasswordHash == null || !adminUser.PasswordHash.StartsWith("AQAAAA"))
+        {
+            adminUser.PasswordHash = hasher.HashPassword(adminUser, "Admin123!");
+            context.SaveChanges();
+        }
+    }
+}
 // --- KONFIGURACJA POTOKU (Middleware) ---
 
 if (!app.Environment.IsDevelopment())

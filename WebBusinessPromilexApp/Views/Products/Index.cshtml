@@ -21,7 +21,7 @@
             <thead>
                 <tr class="bg-[#0D051A]/80 border-b border-white/10 text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">
                     <th class="p-5">Nazwa</th>
-                    <th class="p-5">Cena</th>
+                    <th class="p-5">Cena (PLN)</th>
                     <th class="p-5">Ilość</th>
                     <th class="p-5">Status</th>
                     <th class="p-5 text-right">Akcje</th>
@@ -30,10 +30,28 @@
             <tbody class="divide-y divide-white/5">
                 @foreach (var item in Model)
                 {
+                    var activePromo = item.Promotions?.FirstOrDefault(p => p.StartDate <= DateTime.Now && p.EndDate >= DateTime.Now);
+                    
                     <tr class="hover:bg-white/[0.02] transition-colors group">
-                        <td class="p-5 text-white font-medium">@Html.DisplayFor(modelItem => item.Name)</td>
-                        <td class="p-5 text-[#FF00A0] font-bold">@Html.DisplayFor(modelItem => item.Price) PLN</td>
-                        <td class="p-5 text-gray-400">@Html.DisplayFor(modelItem => item.Stock) szt.</td>
+                        <td class="p-5 text-white font-medium">@item.Name</td>
+                        
+                        <td class="p-5">
+                            @if (activePromo != null)
+                            {
+                                var discountedPrice = item.Price * (1 - (activePromo.DiscountPercentage / 100m));
+                                <div class="flex flex-col">
+                                    <span class="text-[10px] text-gray-500 line-through">@item.Price.ToString("0.00") PLN</span>
+                                    <span class="text-[#FF00A0] font-bold text-lg leading-tight">@discountedPrice.ToString("0.00") PLN</span>
+                                    <span class="text-[9px] text-[#B300FF] font-bold uppercase tracking-widest mt-1">@activePromo.Name (-@activePromo.DiscountPercentage%)</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <span class="text-[#FF00A0] font-bold">@item.Price.ToString("0.00") PLN</span>
+                            }
+                        </td>
+                        
+                        <td class="p-5 text-gray-400">@item.Stock szt.</td>
                         <td class="p-5">
                             @if (item.IsAvailable)
                             {

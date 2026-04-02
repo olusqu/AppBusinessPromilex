@@ -1,4 +1,6 @@
-﻿namespace WebBusinessPromilexApp.Models;
+﻿using System.Collections.Generic;
+
+namespace WebBusinessPromilexApp.Models;
 
 public partial class Product
 {
@@ -10,6 +12,7 @@ public partial class Product
     public bool IsAvailable { get; set; }
     public string? ImageUrl { get; set; }
 
-    // Relacja: Produkt należy do jednej kategorii
     public virtual Category? Category { get; set; }
+
+    public virtual ICollection<Promotion> Promotions { get; set; } = new List<Promotion>();
 }

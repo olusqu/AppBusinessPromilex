@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using WebBusinessPromilexApp.Filters;
 using WebBusinessPromilexApp.Models;
+using WebBusinessPromilexApp.Services;
 
 namespace WebBusinessPromilexApp.Controllers
 {
@@ -21,17 +22,25 @@ namespace WebBusinessPromilexApp.Controllers
             return View(promotion);
         }
 
-        public IActionResult Create() => View();
+        public async Task<IActionResult> Create()
+        {
+            ViewBag.AllProducts = await _service.GetAllProductsAsync();
+            return View();
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,DiscountPercentage,StartDate,EndDate")] Promotion promotion)
+        public async Task<IActionResult> Create([Bind("Id,Name,DiscountPercentage,StartDate,EndDate")] Promotion promotion, List<int> selectedProductIds)
         {
             if (ModelState.IsValid)
             {
                 await _service.CreateAsync(promotion);
+
+                await _service.AssignProductsToPromotionAsync(promotion.Id, selectedProductIds);
+
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.AllProducts = await _service.GetAllProductsAsync();
             return View(promotion);
         }
 
@@ -40,20 +49,33 @@ namespace WebBusinessPromilexApp.Controllers
             if (id == null) return NotFound();
             var promotion = await _service.GetByIdAsync(id.Value);
             if (promotion == null) return NotFound();
+
+            ViewBag.AllProducts = await _service.GetAllProductsAsync();
             return View(promotion);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,DiscountPercentage,StartDate,EndDate")] Promotion promotion)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,DiscountPercentage,StartDate,EndDate")] Promotion promotion, List<int> selectedProductIds)
         {
             if (id != promotion.Id) return NotFound();
+
             if (ModelState.IsValid)
             {
-                try { await _service.UpdateAsync(promotion); }
-                catch (DbUpdateConcurrencyException) { if (!_service.Exists(promotion.Id)) return NotFound(); else throw; }
+                try
+                {
+                    await _service.UpdateAsync(promotion);
+
+                    await _service.AssignProductsToPromotionAsync(promotion.Id, selectedProductIds);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!_service.Exists(promotion.Id)) return NotFound();
+                    else throw;
+                }
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.AllProducts = await _service.GetAllProductsAsync();
             return View(promotion);
         }
 

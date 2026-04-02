@@ -18,7 +18,13 @@
 </div>
 
 <div class="w-full py-8">
-    <h2 class="text-xs font-bold text-gray-500 uppercase tracking-[0.3em] mb-8 border-b border-white/5 pb-4">Moduły Operacyjne</h2>
+    <div class="flex justify-between items-end mb-8 border-b border-white/5 pb-4">
+        <h2 class="text-xs font-bold text-gray-500 uppercase tracking-[0.3em]">Moduły Operacyjne</h2>
+        
+        <a asp-controller="Home" asp-action="Index" class="flex items-center gap-2 text-[10px] font-bold text-gray-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 px-4 py-2.5 rounded-lg transition-all uppercase tracking-[0.2em] hover:shadow-[0_0_15px_rgba(0,240,255,0.2)] group">
+            <i class="ri-store-2-line text-[#00F0FF] text-sm group-hover:scale-110 transition-transform"></i> Przejdź do sklepu
+        </a>
+    </div>
     
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         

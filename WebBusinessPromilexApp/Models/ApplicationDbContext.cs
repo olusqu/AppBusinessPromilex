@@ -7,14 +7,10 @@ namespace WebBusinessPromilexApp.Models;
 
 public partial class ApplicationDbContext : DbContext
 {
-    public ApplicationDbContext()
-    {
-    }
+    public ApplicationDbContext() { }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        : base(options)
-    {
-    }
+        : base(options) { }
 
     public virtual DbSet<Category> Categories { get; set; }
     public virtual DbSet<Customer> Customers { get; set; }
@@ -25,6 +21,7 @@ public partial class ApplicationDbContext : DbContext
     public virtual DbSet<Promotion> Promotions { get; set; }
     public virtual DbSet<Supplier> Suppliers { get; set; }
     public virtual DbSet<InventoryLog> InventoryLogs { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Category>(entity =>
@@ -34,6 +31,7 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.Name).HasMaxLength(100);
             entity.Property(e => e.ImageUrl).HasMaxLength(500);
         });
+
         modelBuilder.Entity<Customer>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Customer__3214EC0716C59B19");
@@ -46,11 +44,9 @@ public partial class ApplicationDbContext : DbContext
         modelBuilder.Entity<Employee>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Employee__3214EC07246D1BA6");
-
             entity.Property(e => e.FirstName).HasMaxLength(100);
             entity.Property(e => e.LastName).HasMaxLength(100);
             entity.Property(e => e.Role).HasMaxLength(50);
-
             entity.Property(e => e.Username).HasMaxLength(100);
             entity.Property(e => e.PasswordHash).HasMaxLength(4000);
         });
@@ -95,8 +91,13 @@ public partial class ApplicationDbContext : DbContext
             entity.HasOne(d => d.Category)
                   .WithMany(p => p.Products)
                   .HasForeignKey(d => d.CategoryId)
-                  .OnDelete(DeleteBehavior.SetNull) 
+                  .OnDelete(DeleteBehavior.SetNull)
                   .HasConstraintName("FK_Products_Categories");
+
+            // KONFIGURACJA MANY-TO-MANY
+            entity.HasMany(p => p.Promotions)
+                  .WithMany(p => p.Products)
+                  .UsingEntity(j => j.ToTable("ProductPromotions")); // Tabela pośrednia
         });
 
         modelBuilder.Entity<Promotion>(entity =>
@@ -115,6 +116,7 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.ContactPerson).HasMaxLength(100);
             entity.Property(e => e.Phone).HasMaxLength(20);
         });
+
         modelBuilder.Entity<InventoryLog>(entity =>
         {
             entity.HasKey(e => e.Id);
@@ -133,10 +135,9 @@ public partial class ApplicationDbContext : DbContext
                   .HasForeignKey(d => d.EmployeeId)
                   .OnDelete(DeleteBehavior.SetNull);
         });
+
         OnModelCreatingPartial(modelBuilder);
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-
-public DbSet<WebBusinessPromilexApp.Models.InventoryLog> InventoryLog { get; set; } = default!;
 }

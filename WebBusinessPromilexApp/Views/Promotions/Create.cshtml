@@ -4,10 +4,9 @@
     ViewData["Title"] = "Nowa Promocja";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <div class="mb-8">
     <h2 class="text-4xl font-bold text-white tracking-tight uppercase italic">Nowa <span class="text-[#FF00A0]">Kampania</span></h2>
-    <p class="text-gray-500 mt-1 uppercase text-xs tracking-widest">Ustal parametry zniżki</p>
+    <p class="text-gray-500 mt-1 uppercase text-xs tracking-widest">Ustal parametry zniżki i wybierz produkty</p>
 </div>
 
 <div class="max-w-3xl bg-[#1E1332]/50 border border-white/5 rounded-3xl p-10 shadow-2xl backdrop-blur-md">
@@ -37,6 +36,23 @@
                     <label asp-for="EndDate" class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3">Data zakończenia</label>
                     <input asp-for="EndDate" type="datetime-local" class="w-full bg-[#0D051A] border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-[#B300FF]" />
                 </div>
+            </div>
+
+            <div class="pt-6 border-t border-white/5">
+                <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3">Produkty objęte promocją</label>
+                <p class="text-xs text-gray-400 mb-4">Przytrzymaj <kbd class="bg-gray-800 px-1 rounded">CTRL</kbd> lub <kbd class="bg-gray-800 px-1 rounded">CMD</kbd>, aby zaznaczyć wiele produktów.</p>
+                
+                <select name="selectedProductIds" class="w-full bg-[#0D051A] border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-[#FF00A0] transition-all" multiple="multiple" style="height: 250px;">
+                    @if (ViewBag.AllProducts != null)
+                    {
+                        foreach (var product in ViewBag.AllProducts)
+                        {
+                            <option value="@product.Id" class="py-2 px-3 hover:bg-[#FF00A0]/20 rounded-md cursor-pointer transition-colors">
+                                @product.Name (Aktualna cena: @product.Price zł)
+                            </option>
+                        }
+                    }
+                </select>
             </div>
 
             <div class="flex justify-end items-center space-x-6 pt-10 border-t border-white/5">
